@@ -3,8 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
 import CategoryNav from "./CategoryNav";
 import PriceTicker from "./PriceTicker";
+import UserDropdown from "./UserDropdown";
 import type { Product } from "@/types/product";
 import type { Category } from "@/types/category";
 
@@ -15,6 +17,7 @@ interface NavbarProps {
 
 export default function Navbar({ categories, products }: NavbarProps) {
   const pathname = usePathname();
+  const { data: session, isPending } = useSession();
 
   const isSignIn = pathname === "/signin";
   const isSignUp = pathname === "/signup";
@@ -38,7 +41,7 @@ export default function Navbar({ categories, products }: NavbarProps) {
                 alt="বাজার দর"
                 width={40}
                 height={40}
-                className="h-10 w-10 border-2 border-border p-2 shrink-0 rounded-xl object-contain"
+                className="h-10 w-10 shrink-0 rounded-xl border-2 border-border p-2 object-contain"
                 priority
               />
 
@@ -52,23 +55,34 @@ export default function Navbar({ categories, products }: NavbarProps) {
             </Link>
 
             <div className="flex shrink-0 items-center gap-2">
-              <Link
-                href="/signin"
-                className={`btn btn-ghost btn-sm ${
-                  isSignIn ? "text-primary" : ""
-                }`}
-              >
-                সাইন ইন
-              </Link>
+              {isPending ? (
+                <div className="flex items-center gap-2">
+                  <div className="skeleton h-9 w-9 rounded-lg" />
+                  <div className="skeleton hidden h-4 w-20 sm:block" />
+                </div>
+              ) : session?.user ? (
+                <UserDropdown user={session.user} />
+              ) : (
+                <>
+                  <Link
+                    href="/signin"
+                    className={`btn btn-ghost btn-sm ${
+                      isSignIn ? "text-primary" : ""
+                    }`}
+                  >
+                    সাইন ইন
+                  </Link>
 
-              <Link
-                href="/signup"
-                className={`btn btn-sm border-0 bg-primary text-white hover:bg-primary-hover sm:btn-md ${
-                  isSignUp ? "bg-primary-hover" : ""
-                }`}
-              >
-                সাইন আপ
-              </Link>
+                  <Link
+                    href="/signup"
+                    className={`btn btn-sm border-0 bg-primary text-white hover:bg-primary-hover sm:btn-md ${
+                      isSignUp ? "bg-primary-hover" : ""
+                    }`}
+                  >
+                    সাইন আপ
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

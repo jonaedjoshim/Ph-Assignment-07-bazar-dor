@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import toast from "react-hot-toast";
@@ -9,7 +10,10 @@ import { signIn } from "@/lib/auth-client";
 type SocialProvider = "google" | "github";
 
 export default function SocialLogin() {
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState<SocialProvider | null>(null);
+
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   async function handleSocialLogin(provider: SocialProvider) {
     setLoading(provider);
@@ -17,21 +21,19 @@ export default function SocialLogin() {
     try {
       const result = await signIn.social({
         provider,
-        callbackURL: "/",
+        callbackURL: callbackUrl,
       });
 
       if (result.error) {
         toast.error(result.error.message || "সোশ্যাল লগইন ব্যর্থ হয়েছে", {
           id: "social-login-error",
         });
-
         setLoading(null);
       }
     } catch {
       toast.error("সোশ্যাল লগইন করতে সমস্যা হয়েছে", {
         id: "social-login-error",
       });
-
       setLoading(null);
     }
   }

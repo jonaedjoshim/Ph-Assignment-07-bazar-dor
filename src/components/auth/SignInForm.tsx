@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +13,10 @@ import SocialLogin from "./SocialLogin";
 
 export default function SignInForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
+
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const {
     register,
@@ -47,7 +50,7 @@ export default function SignInForm() {
         id: "signin-success",
       });
 
-      router.push("/");
+      router.push(callbackUrl);
       router.refresh();
     } catch {
       toast.error("সাইন ইন করতে সমস্যা হয়েছে", {

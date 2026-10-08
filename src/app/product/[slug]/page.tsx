@@ -4,6 +4,7 @@ import { FaChevronRight } from "react-icons/fa6";
 import ProductSummary from "@/components/product/ProductSummary";
 import PriceSummary from "@/components/product/PriceSummary";
 import MarketPriceTable from "@/components/product/MarketPriceTable";
+import { requireAuth } from "@/lib/require-auth";
 import { getProducts, getProductById } from "@/lib/api/products";
 
 interface ProductPageProps {
@@ -14,6 +15,8 @@ interface ProductPageProps {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
+
+  await requireAuth(`/product/${slug}`);
 
   let products;
 
