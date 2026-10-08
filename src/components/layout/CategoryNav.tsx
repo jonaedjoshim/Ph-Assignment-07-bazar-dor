@@ -2,41 +2,40 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { Category } from "@/types/category";
 
-const categories = [
-  { name: "চাল", slug: "chal", icon: "🍚" },
-  { name: "ডাল", slug: "dal", icon: "🫘" },
-  { name: "তেল", slug: "tel", icon: "🛢️" },
-  { name: "সবজি", slug: "sobji", icon: "🥬" },
-  { name: "মাছ", slug: "mach", icon: "🐟" },
-  { name: "মাংস", slug: "mangsho", icon: "🍗" },
-  { name: "ডিম-দুধ", slug: "dim-dudh", icon: "🥛" },
-  { name: "মসলা", slug: "moshla", icon: "🌶️" },
-];
+interface CategoryNavProps {
+  categories: Category[];
+}
 
-export default function CategoryNav() {
+export default function CategoryNav({ categories }: CategoryNavProps) {
   const pathname = usePathname();
 
   return (
-    <nav className="border-b border-border bg-white" aria-label="ক্যাটাগরি">
+    <nav
+      aria-label="পণ্যের ক্যাটাগরি"
+      className="border-b border-border bg-white"
+    >
       <div className="container-custom">
-        <div className="flex items-center gap-1 overflow-x-auto py-2 scrollbar-none [&::-webkit-scrollbar]:hidden md:gap-2 lg:justify-between">
+        <div className="flex items-center gap-1 overflow-x-auto py-2 scrollbar-none [&::-webkit-scrollbar]:hidden sm:gap-2">
           {categories.map((category) => {
             const href = `/category/${category.slug}`;
-            const isActive = pathname === href;
+            const active = pathname === href;
 
             return (
               <Link
-                key={category.slug}
+                key={category.id}
                 href={href}
-                className={`flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-[13px] font-medium whitespace-nowrap transition-colors ${
-                  isActive
+                aria-current={active ? "page" : undefined}
+                className={`flex shrink-0 items-center gap-1.5 rounded-lg px-3.5 py-2 text-[13px] font-semibold whitespace-nowrap transition-colors sm:px-4 ${
+                  active
                     ? "bg-primary text-white"
                     : "text-foreground hover:bg-surface-muted"
                 }`}
               >
                 <span>{category.icon}</span>
-                <span>{category.name}</span>
+
+                <span>{category.nameBn}</span>
               </Link>
             );
           })}
