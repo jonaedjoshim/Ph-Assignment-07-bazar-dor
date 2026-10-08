@@ -47,7 +47,7 @@ export default function Hero() {
             width={400}
             height={320}
             priority
-            className="h-auto w-full max-w-65 object-contain sm:max-w-[320px] lg:max-w-[350px]"
+            className="h-auto w-full max-w-65 object-contain sm:max-w-[320px] lg:max-w-87.5"
           />
         </div>
       </div>

@@ -32,7 +32,7 @@ export default function CategoryProducts({ products }: CategoryProductsProps) {
 
   return (
     <div>
-      <div className="surface-card mb-4 flex min-h-[66px] items-center justify-between gap-3 px-4 py-3 sm:px-6">
+      <div className="surface-card mb-4 flex min-h-16.5 items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <div className="text-sm font-medium text-muted">পণ্যের তালিকা</div>
 
         <div className="flex items-center gap-3">
@@ -48,7 +48,7 @@ export default function CategoryProducts({ products }: CategoryProductsProps) {
               id="category-sort"
               value={sortBy}
               onChange={(event) => setSortBy(event.target.value as SortOption)}
-              className="select select-bordered select-sm w-[155px] appearance-none border-border bg-white pr-8 text-xs text-foreground focus:border-primary focus:outline-none sm:w-[190px] sm:text-sm"
+              className="select select-bordered select-sm w-38.75 appearance-none border-border bg-white pr-8 text-xs text-foreground focus:border-primary focus:outline-none sm:w-47.5 sm:text-sm"
             >
               <option value="default">ডিফল্ট</option>
               <option value="low-to-high">দাম: কম থেকে বেশি</option>

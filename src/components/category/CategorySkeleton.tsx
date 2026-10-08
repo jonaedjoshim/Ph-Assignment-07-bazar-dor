@@ -36,7 +36,7 @@ export default function CategorySkeleton() {
         </div>
       </div>
 
-      <div className="surface-card flex min-h-[66px] items-center justify-between px-5">
+      <div className="surface-card flex min-h-16.5 items-center justify-between px-5">
         <div className="skeleton h-4 w-28" />
         <div className="skeleton h-9 w-40 rounded-lg" />
       </div>
