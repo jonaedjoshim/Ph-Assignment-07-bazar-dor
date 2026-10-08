@@ -3,7 +3,6 @@ import { Hind_Siliguri } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import SiteHeader from "@/components/layout/SiteHeader";
 import Footer from "@/components/layout/Footer";
-import AosProvider from "@/providers/AosProvider";
 import "./globals.css";
 
 const hindSiliguri = Hind_Siliguri({
@@ -40,10 +39,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="bn" data-theme="light">
+    <html lang="bn" data-theme="light" data-scroll-behavior="smooth">
       <body className={hindSiliguri.variable}>
-        <AosProvider />
-
         <div className="flex min-h-screen flex-col">
           <SiteHeader />
 
