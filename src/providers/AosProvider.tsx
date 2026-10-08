@@ -4,19 +4,23 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-export default function AosProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AosProvider() {
   useEffect(() => {
-    AOS.init({
-      duration: 700,
-      once: true,
-      offset: 48,
-      easing: "ease-out",
-    });
+    const timer = window.setTimeout(() => {
+      AOS.init({
+        duration: 650,
+        easing: "ease-out-cubic",
+        once: true,
+        offset: 50,
+        disable: () =>
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+      });
+    }, 300);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
   }, []);
 
-  return <>{children}</>;
+  return null;
 }

@@ -1,30 +1,55 @@
-export default function HomePage() {
-  return (
-    <div className="container-custom py-10 sm:py-16">
-      <section className="surface-card px-6 py-12 sm:px-10 sm:py-16">
-        <span className="inline-flex rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-primary">
-          আজকের বাজারদর
-        </span>
-        <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-          আজকের বাজারের দাম এক নজরে
-        </h2>
-        <p className="mt-5 max-w-xl text-sm leading-7 text-muted sm:text-base">
-          চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক
-          বিস্তারিত তথ্য এবং প্রতিদিনের দামের পরিবর্তন এক জায়গায়।
-        </p>
-        <div className="mt-8">
-          <a href="#সব-পণ্য" className="button-primary">
-            সব পণ্য দেখুন
+import Hero from "@/components/home/Hero";
+import ProductSection from "@/components/home/ProductSection";
+import { getProducts, getTopRisers, getTopFallers } from "@/lib/api/products";
+
+export default async function HomePage() {
+  let products;
+
+  try {
+    products = await getProducts();
+  } catch {
+    return (
+      <div className="container-custom py-16">
+        <div className="surface-card mx-auto max-w-xl px-6 py-12 text-center">
+          <h1 className="text-2xl font-bold text-foreground">
+            পণ্যের তথ্য পাওয়া যাচ্ছে না
+          </h1>
+
+          <p className="mt-3 text-sm text-muted">
+            সাময়িক সমস্যার কারণে বাজারদরের তথ্য লোড করা সম্ভব হয়নি। কিছুক্ষণ
+            পর আবার চেষ্টা করুন।
+          </p>
+
+          <a
+            href="/"
+            className="btn mt-6 border-0 bg-primary text-white hover:bg-primary-hover"
+          >
+            আবার চেষ্টা করুন
           </a>
         </div>
-      </section>
+      </div>
+    );
+  }
 
-      <section id="সব-পণ্য" className="py-12">
-        <h2 className="text-xl font-bold">সব পণ্য</h2>
-        <p className="mt-2 text-sm text-muted">
-          নিত্যপ্রয়োজনীয় পণ্যের সর্বশেষ বাজারদর এখানে দেখতে পারবেন।
-        </p>
-      </section>
+  const risers = getTopRisers(products, 6);
+  const fallers = getTopFallers(products, 6);
+
+  return (
+    <div className="container-custom space-y-12 py-6 sm:space-y-14 sm:py-8">
+      <Hero />
+
+      <ProductSection title="আজ দাম বেড়েছে" icon="▲" products={risers} />
+
+      <ProductSection title="আজ দাম কমেছে" icon="▼" products={fallers} />
+
+      <ProductSection
+        id="সব-পণ্য"
+        title="সব পণ্য"
+        subtitle={`মোট ${new Intl.NumberFormat("bn-BD").format(
+          products.length,
+        )}টি পণ্য দেখানো হচ্ছে`}
+        products={products}
+      />
     </div>
   );
 }
