@@ -1,24 +1,37 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+import ProfileCard from "@/components/profile/ProfileCard";
+import ProfileInformation from "@/components/profile/ProfileInformation";
 import { requireAuth } from "@/lib/require-auth";
+
+export const metadata: Metadata = {
+  title: "আমার প্রোফাইল",
+  description: "বাজার দর অ্যাকাউন্টের প্রোফাইল তথ্য",
+};
 
 export default async function ProfilePage() {
   const session = await requireAuth("/profile");
 
   return (
-    <div className="container-custom py-12">
-      <div className="surface-card mx-auto max-w-2xl p-8">
-        <h1 className="text-2xl font-bold text-foreground">আমার প্রোফাইল</h1>
+    <div className="container-custom py-10 sm:py-14">
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-7">
+          <h1 className="text-2xl font-bold text-foreground sm:text-3xl">
+            আমার প্রোফাইল
+          </h1>
 
-        <p className="mt-4 text-foreground">{session.user.name}</p>
+          <p className="mt-1 text-sm text-muted">
+            আপনার অ্যাকাউন্টের তথ্য এখানে দেখুন।
+          </p>
+        </div>
 
-        <p className="mt-1 text-sm text-muted">{session.user.email}</p>
+        <div className="space-y-5">
+          <ProfileCard user={session.user} />
 
-        <Link
-          href="/"
-          className="btn mt-6 border-0 bg-primary text-white hover:bg-primary-hover"
-        >
-          হোম পেজে ফিরে যান
-        </Link>
+          <ProfileInformation
+            name={session.user.name}
+            email={session.user.email}
+          />
+        </div>
       </div>
     </div>
   );
