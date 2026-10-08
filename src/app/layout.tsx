@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Hind_Siliguri } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import AosProvider from "@/providers/AosProvider";
 import "./globals.css";
 
 const hindSiliguri = Hind_Siliguri({
@@ -17,13 +20,11 @@ export const metadata: Metadata = {
   },
   description:
     "চাল, ডাল, তেল, সবজি, মাছ, মাংস ও নিত্যপ্রয়োজনীয় পণ্যের আজকের বাজারদর এবং দামের পরিবর্তন এক জায়গায় দেখুন।",
-  keywords: [
-    "বাজার দর",
-    "Bazar Dor",
-    "Bangladesh Market Price",
-    "Daily Bazar Price",
-    "আজকের বাজারদর",
-  ],
+  icons: {
+    icon: "/images/logo-icon.png",
+    shortcut: "/images/logo-icon.png",
+    apple: "/images/logo-icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -34,7 +35,13 @@ export default function RootLayout({
   return (
     <html lang="bn">
       <body className={hindSiliguri.variable}>
-        {children}
+        <div className="flex min-h-screen flex-col">
+          <Navbar />
+          <AosProvider>
+            <main className="flex-1">{children}</main>
+          </AosProvider>
+          <Footer />
+        </div>
         <Toaster
           position="top-right"
           toastOptions={{
