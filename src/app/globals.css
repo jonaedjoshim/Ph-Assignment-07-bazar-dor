@@ -194,3 +194,19 @@ button {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+[data-aos] {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-aos] {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
