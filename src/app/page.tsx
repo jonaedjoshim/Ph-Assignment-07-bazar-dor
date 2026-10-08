@@ -1,6 +1,7 @@
 import Hero from "@/components/home/Hero";
 import ProductSection from "@/components/home/ProductSection";
 import { getProducts, getTopRisers, getTopFallers } from "@/lib/api/products";
+import Link from "next/link";
 
 export default async function HomePage() {
   let products;
@@ -20,12 +21,12 @@ export default async function HomePage() {
             পর আবার চেষ্টা করুন।
           </p>
 
-          <a
+          <Link
             href="/"
             className="btn mt-6 border-0 bg-primary text-white hover:bg-primary-hover"
           >
             আবার চেষ্টা করুন
-          </a>
+          </Link>
         </div>
       </div>
     );
